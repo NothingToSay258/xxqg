@@ -86,8 +86,8 @@ if __name__ == "__main__":
         import ctypes
         from os import getcwd, remove, path
         from pathlib import Path
-        curr_dir = Path(__file__)
-        program_path = curr_dir.parent.parent
+        curr_dir = Path(__file__).parent
+        program_path = curr_dir
         if not (data_dir := curr_dir / 'data').exists():
             data_dir.mkdir()
         ctypes.windll.kernel32.SetConsoleTitleW('xuexi-{}'.format(VERSION))
