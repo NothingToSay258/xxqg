@@ -85,7 +85,11 @@ if __name__ == "__main__":
         from sys import exit
         import ctypes
         from os import getcwd, remove, path
-
+        from pathlib import Path
+        curr_dir = Path(__file__)
+        program_path = curr_dir.parent.parent
+        if not (data_dir := curr_dir / 'data').exists():
+            data_dir.mkdir()
         ctypes.windll.kernel32.SetConsoleTitleW('xuexi-{}'.format(VERSION))
 
         try:
@@ -97,7 +101,7 @@ if __name__ == "__main__":
             call('pause', shell=True)
             exit(1)
 
-        if not get_chromedriver.do(getcwd()):
+        if not get_chromedriver.do(program_path):
             exit(1)
 
         chrome_options = webdriver.ChromeOptions()
@@ -110,10 +114,10 @@ if __name__ == "__main__":
         chrome_options.add_argument('--ignore-ssl-errors')  # 忽略ssl错误
         chrome_options.add_argument('–log-level=3')
 
-        browser = XuexiChrome(path.join(getcwd(), 'chromedriver.exe'), options=chrome_options)
+        browser = XuexiChrome(program_path / 'chromedriver.exe', options=chrome_options)
         browser.maximize_window()
 
-        exam_temp_Path = './data/exam_temp.json'
+        exam_temp_Path = program_path / 'data' / 'exam_temp.json'
     except:
         print(str(format_exc()))
         print('--> \033[31m程序异常，请尝试重启脚本\033[0m')

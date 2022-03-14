@@ -1,8 +1,9 @@
 .idea
 /build/
 /dist/
-/data/exam_temp.json
+xuexi_venv/
+venv/
+data/exam_temp.json
 chromedriver.exe
-
-data/articles.js
 data/articles.json
+data/videos.json
