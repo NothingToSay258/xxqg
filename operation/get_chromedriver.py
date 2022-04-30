@@ -33,6 +33,8 @@ def do(program_path: Path) -> bool:
             print('--> 当前ChromeDriver版本号和Chrome浏览器版本号不一致，准备进行更新')
             remote_latest_version = get_remote_download_version(current_chrome_browser_version)
             download_url = urljoin(url, f'{remote_latest_version}/chromedriver_win32.zip')
+            # https://registry.npmmirror.com/-/binary/chromedriver/101.0.4951.15/chromedriver_win32.zip
+            print(f'download_url is :\t{download_url}')
             download_chromedriver(download_url, program_path)
             unzip_file(program_path)
             print('--> ChromeDriver更新成功\n')
@@ -56,12 +58,14 @@ def get_remote_download_version(current_chrome_browser_version: str) -> str:
     rep = loads(get(google_api_url).content.decode('utf-8'))
     # 去掉其他杂项
     version_list = [item for item in rep
-                    if item['date'] == '-' and len(item['name']) > 7
+                    if item['type'] == 'dir' and len(item['name']) > 7
                     ]
     download_version: str = version_list[-1]
     for item in version_list:
         if current_chrome_browser_version in item['name']:
             download_version = item['name'][:-1]
+            # download_version = current_chrome_browser_version
+    print(f'download_version is :\t{download_version}')
     return download_version
 
 

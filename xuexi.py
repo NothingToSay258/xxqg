@@ -86,7 +86,7 @@ if __name__ == "__main__":
         import ctypes
         from os import getcwd, remove, path
         from pathlib import Path
-        curr_dir = Path(__file__).parent
+        curr_dir = Path(__file__).parent.absolute()
         program_path = curr_dir
         if not (data_dir := curr_dir / 'data').exists():
             data_dir.mkdir()
@@ -113,7 +113,8 @@ if __name__ == "__main__":
         chrome_options.add_argument('--ignore-certificate-errors')  # 忽略证书错误
         chrome_options.add_argument('--ignore-ssl-errors')  # 忽略ssl错误
         chrome_options.add_argument('–log-level=3')
-
+        print(program_path)
+        # / 'chromedriver.exe')
         browser = XuexiChrome(program_path / 'chromedriver.exe', options=chrome_options)
         browser.maximize_window()
 
